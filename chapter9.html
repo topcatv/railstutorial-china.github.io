@@ -243,7 +243,7 @@
     <span class="c1"># Sign in when not using Capybara.</span>
     <span class="n">remember_token</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new_remember_token</span>
     <span class="n">cookies</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span> <span class="o">=</span> <span class="n">remember_token</span>
-    <span class="n">user</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">:remember_token</span><span class="p">,</span> <span class="no">User</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">remember_token</span><span class="p">))</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">:remember_token</span><span class="p">,</span> <span class="no">User</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">remember_token</span><span class="p">))</span>
   <span class="k">else</span>
     <span class="n">visit</span> <span class="n">signin_path</span>
     <span class="n">fill_in</span> <span class="s2">"Email"</span><span class="p">,</span>    <span class="ss">with</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>
@@ -612,7 +612,7 @@
   <span class="o">.</span>
   <span class="o">.</span>
   <span class="k">def</span> <span class="nf">current_user</span>
-    <span class="n">remember_token</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cookies</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span><span class="p">)</span>
+    <span class="n">remember_token</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">cookies</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span><span class="p">)</span>
     <span class="vi">@current_user</span> <span class="o">||=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="n">remember_token</span><span class="p">:</span> <span class="n">remember_token</span><span class="p">)</span>
   <span class="k">end</span>
 
@@ -994,7 +994,7 @@
 <span class="n">ruby</span> <span class="s1">'2.0.0'</span>
 <span class="c1">#ruby-gemset=railstutorial_rails_4_0</span>
 
-<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.0'</span>
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.4'</span>
 <span class="n">gem</span> <span class="s1">'bootstrap-sass'</span><span class="p">,</span> <span class="s1">'2.3.2.0'</span>
 <span class="n">gem</span> <span class="s1">'bcrypt-ruby'</span><span class="p">,</span> <span class="s1">'3.0.1'</span>
 <span class="n">gem</span> <span class="s1">'faker'</span><span class="p">,</span> <span class="s1">'1.1.2'</span>
@@ -1021,7 +1021,7 @@
                  <span class="ss">password</span><span class="p">:</span> <span class="s2">"foobar"</span><span class="p">,</span>
                  <span class="n">password_confirmation</span><span class="p">:</span> <span class="s2">"foobar"</span><span class="p">)</span>
     <span class="mi">99</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
-      <span class="nb">name</span>  <span class="o">=</span> <span class="ss">Faker</span><span class="p">:</span><span class="ss">:Name</span><span class="o">.</span><span class="n">name</span>
+      <span class="nb">name</span>  <span class="o">=</span> <span class="no">Faker</span><span class="o">::</span><span class="no">Name</span><span class="o">.</span><span class="n">name</span>
       <span class="n">email</span> <span class="o">=</span> <span class="s2">"example-</span><span class="si">#{</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">@railstutorial.org"</span>
       <span class="n">password</span>  <span class="o">=</span> <span class="s2">"password"</span>
       <span class="no">User</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="nb">name</span><span class="p">,</span>
@@ -1063,7 +1063,7 @@
 <span class="n">ruby</span> <span class="s1">'2.0.0'</span>
 <span class="c1">#ruby-gemset=railstutorial_rails_4_0</span>
 
-<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.0'</span>
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.4'</span>
 <span class="n">gem</span> <span class="s1">'bootstrap-sass'</span><span class="p">,</span> <span class="s1">'2.3.2.0'</span>
 <span class="n">gem</span> <span class="s1">'bcrypt-ruby'</span><span class="p">,</span> <span class="s1">'3.0.1'</span>
 <span class="n">gem</span> <span class="s1">'faker'</span><span class="p">,</span> <span class="s1">'1.1.2'</span>
@@ -1323,7 +1323,7 @@
 <div class="figure" id="figure-9-13">
   <img src="figures/user_model_admin_31.png" alt="user model admin 31" /><p class="caption"><span>图 9.13：</span>添加了 <code>admin</code> 属性后的 User 模型</p>
 </div>
-<div class="codeblock has-caption" id="codeblock-9-39"><p class="caption"><span>代码 9.39：</span>为 User 模型添加 <code>admin</code> 属性所用的迁移文件</p><p class="file"><code>db/migrate/[timestamp]_add_admin_to_users.rb</code></p><div class="highlight type-ruby"><pre><span class="k">class</span> <span class="nc">AddAdminToUsers</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
+<div class="codeblock has-caption" id="codeblock-9-39"><p class="caption"><span>代码 9.39：</span>为 User 模型添加 <code>admin</code> 属性所用的迁移文件</p><p class="file"><code>db/migrate/[timestamp]_add_admin_to_users.rb</code></p><div class="highlight type-ruby"><pre><span class="k">class</span> <span class="nc">AddAdminToUsers</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">add_column</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">,</span> <span class="ss">:boolean</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="kp">false</span>
   <span class="k">end</span>
@@ -1619,7 +1619,7 @@
 <span class="n">ruby</span> <span class="s1">'2.0.0'</span>
 <span class="c1">#ruby-gemset=railstutorial_rails_4_0</span>
 
-<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.0'</span>
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.4'</span>
 <span class="n">gem</span> <span class="s1">'bootstrap-sass'</span><span class="p">,</span> <span class="s1">'2.3.2.0'</span>
 <span class="n">gem</span> <span class="s1">'bcrypt-ruby'</span><span class="p">,</span> <span class="s1">'3.0.1'</span>
 <span class="n">gem</span> <span class="s1">'faker'</span><span class="p">,</span> <span class="s1">'1.1.2'</span>
@@ -1655,9 +1655,9 @@
   <span class="c1"># gem 'wdm', '0.1.0'</span>
 <span class="k">end</span>
 
-<span class="n">gem</span> <span class="s1">'sass-rails'</span><span class="p">,</span> <span class="s1">'4.0.0'</span>
+<span class="n">gem</span> <span class="s1">'sass-rails'</span><span class="p">,</span> <span class="s1">'4.0.1'</span>
 <span class="n">gem</span> <span class="s1">'uglifier'</span><span class="p">,</span> <span class="s1">'2.1.1'</span>
-<span class="n">gem</span> <span class="s1">'coffee-rails'</span><span class="p">,</span> <span class="s1">'4.0.0'</span>
+<span class="n">gem</span> <span class="s1">'coffee-rails'</span><span class="p">,</span> <span class="s1">'4.0.1'</span>
 <span class="n">gem</span> <span class="s1">'jquery-rails'</span><span class="p">,</span> <span class="s1">'2.2.1'</span>
 <span class="n">gem</span> <span class="s1">'turbolinks'</span><span class="p">,</span> <span class="s1">'1.1.1'</span>
 <span class="n">gem</span> <span class="s1">'jbuilder'</span><span class="p">,</span> <span class="s1">'1.0.2'</span>
@@ -1780,7 +1780,7 @@
 
           <span class="n">describe</span> <span class="s2">"when signing in again"</span> <span class="k">do</span>
             <span class="n">before</span> <span class="k">do</span>
-              <span class="n">delete</span> <span class="n">signout_path</span>
+              <span class="n">click_link</span> <span class="s1">'Sign out'</span>
               <span class="n">visit</span> <span class="n">signin_path</span>
               <span class="n">fill_in</span> <span class="s2">"Email"</span><span class="p">,</span>    <span class="ss">with</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>
               <span class="n">fill_in</span> <span class="s2">"Password"</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span>

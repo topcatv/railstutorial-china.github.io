@@ -250,7 +250,7 @@
 <div class="codeblock"><div class="highlight type-html"><pre><span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Rails"</span> <span class="na">src=</span><span class="s">"/assets/rails.png"</span> <span class="nt">/&gt;</span>
 </pre></div>
 </div>
-<p><code>alt</code> 属性的内容会在图片无法加载时显示，也会在针对视觉障碍人士的屏幕阅读器中显示。人们有时懒得加上 <code>alt</code> 属性，可是在 HTML 标准中却是必须的。幸运的是，Rails 默认会加上 <code>alt</code> 标签，如果你没有在调用 <code>image_tag</code> 时指定的话，Rails 就会使用图片的文件名（不包括扩展名）。本例中，我们自己设定了 <code>alt</code> 文本，显示一个首字母大写的“Rails”。</p>
+<p>（注意，<code>src</code> 中并没有包含 <code>images</code>，Rails 会自动关联 <code>images</code> 文件夹中对应的图片。把静态资源文件放在 <code>assets</code> 文件夹中可以加快网页响应时间。）<code>alt</code> 属性的内容会在图片无法加载时显示，也会在针对视觉障碍人士的屏幕阅读器中显示。人们有时懒得加上 <code>alt</code> 属性，可是在 HTML 标准中却是必须的。幸运的是，Rails 默认会加上 <code>alt</code> 标签，如果你没有在调用 <code>image_tag</code> 时指定的话，Rails 就会使用图片的文件名（不包括扩展名）。本例中，我们自己设定了 <code>alt</code> 文本，显示一个首字母大写的“Rails”。</p>
 
 <p>在 Rails 之前的版本中，每个 Rails 应用程序中都有 <code>rails.png</code> 这个图片，但在最新版中这个图片不会在执行 <code>rails new</code> 命令时生成，所以要手动从 Ruby on Rails 官网下载，地址为 <a href="http://rubyonrails.org/images/rails.png">http://rubyonrails.org/images/rails.png</a>，保存到 <code>app/assets/images/</code> 文件夹中。（或许还要新建这个文件夹，可以使用 <code>mkdir</code> 命令或者图形化文件管理工具。）因为在代码 5.2 中我们使用了 <code>image_tag</code> 帮助方法，所以 Rails 会通过 Asset Pipeline（参见 <a href="chapter5.html#section-5-2">5.2 节</a>）自动在这个文件夹中寻找所需的图片。</p>
 
@@ -266,7 +266,7 @@
 <div class="codeblock has-caption" id="codeblock-5-3"><p class="caption"><span>代码 5.3：</span>把 bootstrap-sass 加入 <code>Gemfile</code></p><div class="highlight type-ruby"><pre><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
 <span class="n">ruby</span> <span class="s1">'2.0.0'</span>
 
-<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.0'</span>
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.0.4'</span>
 <span class="n">gem</span> <span class="s1">'bootstrap-sass'</span><span class="p">,</span> <span class="s1">'2.3.2.0'</span>
 <span class="o">.</span>
 <span class="o">.</span>
@@ -285,7 +285,7 @@
 <span class="o">.</span>
 <span class="o">.</span>
 <span class="k">module</span> <span class="nn">SampleApp</span>
-  <span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span>
+  <span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
     <span class="o">.</span>
     <span class="o">.</span>
     <span class="o">.</span>
@@ -682,7 +682,7 @@ images javascripts stylesheets
 <h4 id='section-5-2-2-1'><span></span>嵌套</h4>
 
 
-<p>样式表中经常会定义嵌套元素的样式，例如，在代码 5.6 中，定义了 <code>.center</code> 和 <code>.centr h1</code> 两个样式：</p>
+<p>样式表中经常会定义嵌套元素的样式，例如，在代码 5.6 中，定义了 <code>.center</code> 和 <code>.center h1</code> 两个样式：</p>
 
 <div class="codeblock"><div class="highlight type-css"><pre><span class="nc">.center</span> <span class="p">{</span>
   <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
@@ -1048,7 +1048,7 @@ images javascripts stylesheets
 </div>
 <p>这里要采用的步骤和 <a href="chapter3.html#section-3-2-2">3.2.2 节</a>中添加“关于”页面的步骤是一致的：先更新路由设置（参见代码 5.19），然后在 StaticPages 控制器中添加 <code>contact</code> 动作（参见代码 5.20），最后再编写“联系”页面的视图（参见代码 5.21）。</p>
 
-<div class="codeblock has-caption" id="codeblock-5-19"><p class="caption"><span>代码 5.19：</span>添加“联系”页面的路由设置</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="ss">SampleApp</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+<div class="codeblock has-caption" id="codeblock-5-19"><p class="caption"><span>代码 5.19：</span>添加“联系”页面的路由设置</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="no">SampleApp</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
   <span class="n">get</span> <span class="s2">"static_pages/home"</span>
   <span class="n">get</span> <span class="s2">"static_pages/help"</span>
   <span class="n">get</span> <span class="s2">"static_pages/about"</span>
@@ -1119,7 +1119,7 @@ images javascripts stylesheets
 
   <span class="n">describe</span> <span class="s2">"Home page"</span> <span class="k">do</span>
 
-    <span class="n">it</span> <span class="s2">"should have the h1 'Sample App'"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"should have the content 'Sample App'"</span> <span class="k">do</span>
       <span class="n">visit</span> <span class="n">root_path</span>
       <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s1">'Sample App'</span><span class="p">)</span>
     <span class="k">end</span>
@@ -1137,7 +1137,7 @@ images javascripts stylesheets
 
   <span class="n">describe</span> <span class="s2">"Help page"</span> <span class="k">do</span>
 
-    <span class="n">it</span> <span class="s2">"should have the h1 'Help'"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"should have the content 'Help'"</span> <span class="k">do</span>
       <span class="n">visit</span> <span class="n">help_path</span>
       <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s1">'Help'</span><span class="p">)</span>
     <span class="k">end</span>
@@ -1150,7 +1150,7 @@ images javascripts stylesheets
 
   <span class="n">describe</span> <span class="s2">"About page"</span> <span class="k">do</span>
 
-    <span class="n">it</span> <span class="s2">"should have the h1 'About Us'"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"should have the content 'About Us'"</span> <span class="k">do</span>
       <span class="n">visit</span> <span class="n">about_path</span>
       <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s1">'About Us'</span><span class="p">)</span>
     <span class="k">end</span>
@@ -1202,7 +1202,7 @@ images javascripts stylesheets
 
 <p>其他页面也要做类似修改，结果如代码 5.24 所示。不过“首页”有点特殊，参见代码 5.26。</p>
 
-<div class="codeblock has-caption" id="codeblock-5-24"><p class="caption"><span>代码 5.24：</span>静态页面的路由</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="ss">SampleApp</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+<div class="codeblock has-caption" id="codeblock-5-24"><p class="caption"><span>代码 5.24：</span>静态页面的路由</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="no">SampleApp</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
   <span class="n">match</span> <span class="s1">'/help'</span><span class="p">,</span>    <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#help'</span><span class="p">,</span>    <span class="ss">via</span><span class="p">:</span> <span class="s1">'get'</span>
   <span class="n">match</span> <span class="s1">'/about'</span><span class="p">,</span>   <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#about'</span><span class="p">,</span>   <span class="ss">via</span><span class="p">:</span> <span class="s1">'get'</span>
   <span class="n">match</span> <span class="s1">'/contact'</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#contact'</span><span class="p">,</span> <span class="ss">via</span><span class="p">:</span> <span class="s1">'get'</span>
@@ -1244,7 +1244,7 @@ images javascripts stylesheets
 </div>
 <p>不过没必要这么做。Rails 在路由设置文件的下部为根地址 <code>/</code>（斜线）提供了特别的设置方式（参见代码 5.25）。</p>
 
-<div class="codeblock has-caption" id="codeblock-5-25"><p class="caption"><span>代码 5.25：</span>注释掉的根路由设置说明</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="ss">SampleApp</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+<div class="codeblock has-caption" id="codeblock-5-25"><p class="caption"><span>代码 5.25：</span>注释掉的根路由设置说明</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="no">SampleApp</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
   <span class="o">.</span>
   <span class="o">.</span>
   <span class="o">.</span>
@@ -1258,7 +1258,7 @@ images javascripts stylesheets
 </div>
 <p>按照上述说明，我们把根地址 <code>/</code> 映射到“首页”上（参见代码 5.26）。</p>
 
-<div class="codeblock has-caption" id="codeblock-5-26"><p class="caption"><span>代码 5.26：</span>添加根地址的路由设置</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="ss">SampleApp</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+<div class="codeblock has-caption" id="codeblock-5-26"><p class="caption"><span>代码 5.26：</span>添加根地址的路由设置</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="no">SampleApp</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
   <span class="n">root</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#home'</span>
   <span class="n">match</span> <span class="s1">'/help'</span><span class="p">,</span>    <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#help'</span><span class="p">,</span>    <span class="ss">via</span><span class="p">:</span> <span class="s1">'get'</span>
   <span class="n">match</span> <span class="s1">'/about'</span><span class="p">,</span>   <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#about'</span><span class="p">,</span>   <span class="ss">via</span><span class="p">:</span> <span class="s1">'get'</span>
@@ -1594,7 +1594,7 @@ end
 
 <p>我们已经为 Users 控制器生成了 <code>new</code> 动作，如要测试通过，需要正确设置路由，还要有相应内容的视图文件。我们按照代码 5.24 的方式，为“注册”页面加入 <code>match '/signup'</code> 路由设置（参见代码 5.35）。</p>
 
-<div class="codeblock has-caption" id="codeblock-5-35"><p class="caption"><span>代码 5.35：</span>“注册”页面的路由设置</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="ss">SampleApp</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+<div class="codeblock has-caption" id="codeblock-5-35"><p class="caption"><span>代码 5.35：</span>“注册”页面的路由设置</p><p class="file"><code>config/routes.rb</code></p><div class="highlight type-ruby"><pre><span class="no">SampleApp</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
   <span class="n">get</span> <span class="s2">"users/new"</span>
 
   <span class="n">root</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">'static_pages#home'</span>
@@ -1730,9 +1730,9 @@ end
   <span class="k">end</span>
 
   <span class="n">describe</span> <span class="s2">"Help page"</span> <span class="k">do</span>
-    <span class="o">.</span>
-    <span class="o">.</span>
-    <span class="o">.</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">help_path</span> <span class="p">}</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:heading</span><span class="p">)</span>    <span class="p">{</span> <span class="s1">'Help'</span> <span class="p">}</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:page_title</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'Help'</span> <span class="p">}</span>
   <span class="k">end</span>
 
   <span class="n">describe</span> <span class="s2">"About page"</span> <span class="k">do</span>
